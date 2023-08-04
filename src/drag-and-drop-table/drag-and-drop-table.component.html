@@ -1,0 +1,27 @@
+<div>
+  <div
+    style="display: grid; grid-template-columns: 5fr repeat(10, 1fr)"
+    *ngFor="let rowData of tableData; let row = index"
+  >
+    <div style="text-align: left">{{ rowData.rowName }}</div>
+    <div
+      *ngFor="let cellData of rowData.cells; let column = index"
+      appDragSelection
+      [draggingStateSubject]="draggingStateSubject"
+      [row]="row"
+      [column]="column"
+      class="table-cell handle-wrapper"
+      style="user-select: none"
+      (mouseenter)="onMouseEnterCell(row, column)"
+      (mouseleave)="onMouseLeaveCell(row, column)"
+      (mousedown)="onRightClickMouseDown($event)"
+    >
+      <div class="data-wrapper"></div>
+      {{ cellData }}
+      <div
+        class="fill-handle"
+        (mousedown)="onFillHandleButtonClicked(row, column, $event)"
+      ></div>
+    </div>
+  </div>
+</div>
